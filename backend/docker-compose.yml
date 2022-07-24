@@ -1,0 +1,27 @@
+version: "3.7"
+
+services:
+    django:
+        build: .
+        container_name: django
+        command: python manage.py runserver 0.0.0.0:8000
+        volumes:
+            - .:/Users/linzhiyu/Desktop/Shop TIME/backend
+        ports:
+            - "8000:8000"
+        environment:
+            - DEBUG=1
+            - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+        depends_on:
+            - pgdb
+    pgdb:
+        image: postgres
+        container_name: pgdb
+        environment:
+            - POSTGRES_DB=postgres
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=z716292006
+        volumes:
+            - pgdata:/var/lib/postgresql/data/
+volumes:
+    pgdata:

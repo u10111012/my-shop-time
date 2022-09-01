@@ -19,6 +19,9 @@ from django.views.generic import TemplateView
 from django.conf import settings
 from django.conf.urls.static import static
 
+from rest_framework.schemas import get_schema_view
+from rest_framework.documentation import include_docs_urls
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('djoser.urls')),
@@ -30,6 +33,13 @@ urlpatterns = [
     path('api/shipping/', include('shipping.urls')),
     path('api/user/', include('user.urls')),
     path('api/order/', include('orders.urls')),
+
+    path('docs/', include_docs_urls(title='BlogAPI')),
+    path('schema', get_schema_view(
+        title="BlogAPI",
+        description="API for the BlogAPI",
+        version="1.0.0"
+    ), name='openapi-schema'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += [re_path(r'^.*',
